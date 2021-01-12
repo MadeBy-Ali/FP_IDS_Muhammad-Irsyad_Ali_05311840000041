@@ -5,8 +5,8 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   
 [1. Tahap persiapan](#Tahap-Persiapan)  
 [2. Penjelasan](#Penjelasan)  
-[dnslog.py](#A: dnslog.py)
 [3. Dokumentasi](#Dokumentasi)
+[4. Dokumentasi](#Import)
 
 ---
 ## DNS Logging
