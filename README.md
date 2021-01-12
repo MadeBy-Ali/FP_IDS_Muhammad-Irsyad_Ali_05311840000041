@@ -2,12 +2,13 @@
 
 Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020  
   * Muhammad Irsyad Ali (05311840000041)
+[Tahap persiapan](##Tahap-Persiapan)
 
 ---
 ## DNS Logging
 ---
 
-## Tahap Persiapan
+## Tahap-Persiapan
 * Program ini membUtuhkan adanya `pcapy` dan `dpkt` sehingga instalasi dapat dilakukan dengan cara  
 ```bash
 apt-get install git python python-pcapy python-dpkt
