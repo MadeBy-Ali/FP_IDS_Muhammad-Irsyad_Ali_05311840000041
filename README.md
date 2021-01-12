@@ -273,8 +273,6 @@ if __name__ == "__main__":
             except:
                 pass
 ```
-
-  ![topologi_1](https://github.com/.png)
  
 #### B: startdns.py
 * startdns.py berfungsi sebagai interface yang digunakan oleh user, disini user bisa menjalankan loggingnya dan menentukan filter apa yang mau digunakan
@@ -382,4 +380,5 @@ client.messages.create(body='logging telah dilakukan, terdadpat satu Query/Reque
 ```
 
 ## Dokumentasi
-
+  ![topologi_1](https://github.com/.png)
+  ![topologi_1](https://github.com/.png)
