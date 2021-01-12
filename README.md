@@ -8,7 +8,7 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
 [a. dnslog.py](#dnslog.py)
 [b. startdns.py](#startdns.py)
 [c. whatsapp.py](#whatsapp.py)  
-[3. Dokumentasi](#Dokumentasi)
+[3. Dokumentasi](#Doku.mentasi)
 
 
 ---
@@ -387,7 +387,7 @@ client.messages.create(body='logging telah dilakukan, terdadpat satu Query/Reque
                        to=to_whatsapp_number)
 ```
 
-## Dokumentasi
+## Doku.mentasi
 
 #### Tampilan logging sedang berjalan
 ![dokum_1](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/tampilan%20logging%20berjalan.png)
