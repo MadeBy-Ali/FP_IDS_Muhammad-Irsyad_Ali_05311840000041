@@ -176,7 +176,7 @@ def safe_csv_value(value):
     return retval
 ```
 
-##### fungsi
+##### fungsi packet_handler
 ```bash
 def packet_handler(header, packet):
     try:
@@ -223,6 +223,56 @@ def packet_handler(header, packet):
 * kemudian juga di definisikan `scr ip` dan `dst ip` menggunakan socket
 * Kemudian untuk penulisan kedalam file log, digunakan `log_write()` dengan urutan jam/menit/detik, waktu local, usec, DSN record, source ip, destination ip dengan menggunakan
 `log_write(sec, "%s.%06d Q %s %s %s %s %s\n" % (time.strftime("%H:%M:%S", time.localtime(sec)), usec, DNS_QUERY_LUT[msg.qd[0].type], src_ip, dst_ip, safe_csv_value(query), "?"))`
+
+##### fungsi main
+```bash
+def main():
+    global _cap
+    global _datalink
+
+    for directory in ((LOG_DIRECTORY,)):
+        if not os.path.isdir(directory):
+            try:
+                os.makedirs(directory)
+            except:
+                exit("[x] not enough permissions to create the directory '%s'. Please rerun with sudo/root privileges" % directory)
+
+    print("[o] log directory '%s'" % LOG_DIRECTORY)
+
+    print("[i] running...")
+
+    try:
+        _cap = pcapy.open_live(CAPTURE_INTERFACE, SNAP_LEN, PROMISCUOUS_MODE, CAPTURE_TIMEOUT)
+        _cap.setfilter(CAPTURE_FILTER)
+        _datalink = _cap.datalink()
+        _cap.loop(-1, packet_handler)
+    except KeyboardInterrupt:
+        print("[!] Ctrl-C pressed")
+    except pcapy.PcapError as ex:
+        if "permission" in str(ex):
+            exit("[x] not enough permissions to capture traffic. Please rerun with sudo/root privileges")
+        else:
+            raise
+```
+* pertama fungsi ini akan membuat direktory tersendiri yang menyimpan file log
+* kemudian akan dijalankan `pcapy.open_live()` untuk keperluan capture packet dengan waktu dan mode yang sudah ditentukan
+* lalu fungsi `packet_handler` dipanggil dan di loop menggunakan `_cap.loop(-1, packet_handler)` yang akan terus berjalan kecuali dilakukan keyboard interupt
+
+##### main
+```bash
+if __name__ == "__main__":
+    try:
+        main()
+    except (SystemExit, Exception) as ex:
+        print(ex)
+    finally:
+        if _log_handle:
+            try:
+                _log_handle.flush()
+                _log_handle.close()
+            except:
+                pass
+```
 
   ![topologi_1](https://github.com/.png)
  
