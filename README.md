@@ -5,10 +5,10 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   
 [1. Tahap persiapan](#Tahap-Persiapan)  
 [2. Penjelasan](#Penjelasan)  
-[a. dnslog.py](#dnslog.py)
-[b. startdns.py](#startdns.py)
-[c. whatsapp.py](#whatsapp.py)  
-[3. Dokumentasi](#Doku.mentasi)
+[a. dnslog.py](#1)
+[b. startdns.py](#2)
+[c. whatsapp.py](#3)  
+[3. Dokumentasi](#Dokumentasi)
 
 
 ---
@@ -35,6 +35,7 @@ export TWILIO_AUTH_TOKEN='secret auth tokenxxxx'
 ## Penjelasan
 Ide Project yang saya buat memiliki 3 bagian program, yaitu `dnslog.py`, `startdns.py` dan `whatsapp.py`
 
+#### 1
 #### dnslog.py
 * dnslog.py berfungsi sebagai program yang akan melakukan segala aktifitas logging dan penulisan kedalam file yang nantinya akan dapat dapat di filter, berikut penjelasan 
 tentang dnslog.py
@@ -281,7 +282,8 @@ if __name__ == "__main__":
             except:
                 pass
 ```
- 
+
+#### 2
 #### startdns.py
 * startdns.py berfungsi sebagai interface yang digunakan oleh user, disini user bisa menjalankan loggingnya dan menentukan filter apa yang mau digunakan
 ##### Import
@@ -369,7 +371,7 @@ ans = raw_input("Make A Choice")
 menu.get(ans,[None,invalid])[1]()
 
 ```
-
+#### 3
 #### whatsapp.py
 * whatsapp.py berfungsi untuk mengirimkan notifikasi ke pengguna jika ada filter yang terpenuhi dengan mengirimpan pesan via Whatsapp
 ```bash
@@ -387,7 +389,7 @@ client.messages.create(body='logging telah dilakukan, terdadpat satu Query/Reque
                        to=to_whatsapp_number)
 ```
 
-## Doku.mentasi
+## Dokumentasi
 
 #### Tampilan logging sedang berjalan
 ![dokum_1](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/tampilan%20logging%20berjalan.png)
