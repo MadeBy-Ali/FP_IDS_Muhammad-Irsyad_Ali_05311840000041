@@ -4,6 +4,8 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   * Muhammad Irsyad Ali (05311840000041)
 
 ---
+## DNS Logging
+---
 
 ## Tahap Persiapan
 * Program ini membUtuhkan adanya `pcapy` dan `dpkt` sehingga instalasi dapat dilakukan dengan cara  
@@ -26,7 +28,29 @@ export TWILIO_AUTH_TOKEN='secret auth tokenxxxx'
 Ide Project yang saya buat memiliki 3 bagian program, yaitu `dnslog.py`, `startdns.py` dan `whatsapp.py`
 
 #### A: dnslog.py
-  ![topologi_1](https://github.com/krisnanda59/Jarkom_Modul5__Lapres_T19/blob/main/dokum%20shift%205/topologi_persiapan.png)
+* dnslog.py berfungsi sebagai program yang akan melakukan segala aktifitas logging dan penulisan kedalam file yang nantinya akan dapat dapat di filter, berikut penjelasan 
+tentang dnslog.py
+
+```bash
+#!/usr/bin/env python
+
+import gzip 
+import io
+import os 
+import re 
+import shutil 
+import socket 
+import stat 
+import sys
+import time
+import traceback
+
+sys.dont_write_bytecode = True
+```
+* Tahap import untuk segala keperluan program nantinya, `gzip` berfungsi untuk compress decompress terkait hasil logging yang akan ke dalam file berformat `.gz`
+* socket digunakan untuk keperluan terkait ip
+* time digunakan untuk keperluan terkait penamaan file log
+  ![topologi_1](https://github.com/.png)
  
 #### B: startdns.py
 
