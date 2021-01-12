@@ -5,8 +5,11 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   
 [1. Tahap persiapan](#Tahap-Persiapan)  
 [2. Penjelasan](#Penjelasan)  
+[a. dnslog.py](#dnslog.py)
+[b. startdns.py](#startdns.py)
+[c. whatsapp.py](#whatsapp.py)
 [3. Dokumentasi](#Dokumentasi)
-[4. Dokumentasi](#Import)
+
 
 ---
 ## DNS Logging
@@ -32,7 +35,7 @@ export TWILIO_AUTH_TOKEN='secret auth tokenxxxx'
 ## Penjelasan
 Ide Project yang saya buat memiliki 3 bagian program, yaitu `dnslog.py`, `startdns.py` dan `whatsapp.py`
 
-#### A: dnslog.py
+#### dnslog.py
 * dnslog.py berfungsi sebagai program yang akan melakukan segala aktifitas logging dan penulisan kedalam file yang nantinya akan dapat dapat di filter, berikut penjelasan 
 tentang dnslog.py
 
@@ -279,7 +282,7 @@ if __name__ == "__main__":
                 pass
 ```
  
-#### B: startdns.py
+#### startdns.py
 * startdns.py berfungsi sebagai interface yang digunakan oleh user, disini user bisa menjalankan loggingnya dan menentukan filter apa yang mau digunakan
 ##### Import
 ```bash
@@ -367,7 +370,7 @@ menu.get(ans,[None,invalid])[1]()
 
 ```
 
-#### C: whatsapp.py
+#### whatsapp.py
 * whatsapp.py berfungsi untuk mengirimkan notifikasi ke pengguna jika ada filter yang terpenuhi dengan mengirimpan pesan via Whatsapp
 ```bash
 from twilio.rest import Client
