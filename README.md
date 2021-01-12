@@ -74,6 +74,8 @@ _log_path = None
 _log_handle = None
 _flush_last = None
 ```
+* Pada bagian ini didefinisikan nama, tempat lokasi dimana log akan berada, permission dan lain lain. Juga didefinisikan `snap_len` dan `promiscuous_mode` untuk keperluan pcapy
+* Kemudian didefinisikan juga `dns_query_lut` yang merupakan jenis jenis DNS record yang akan di capture
 
 ##### fungsi is_corrupted
 ```bash
@@ -97,6 +99,130 @@ def is_corrupted(path):
 
     return retval
 ```
+* Fungsi untuk pengecekan file log
+
+##### fungsi get_log_handle
+```bash
+def get_log_handle(sec):
+    global _log_path
+    global _log_handle
+
+    localtime = time.localtime(sec)
+    _ = os.path.join(LOG_DIRECTORY, "%d-%02d-%02d.log.gz" % (localtime.tm_year, localtime.tm_mon, localtime.tm_mday)) 
+
+    if _ != _log_path:
+        if os.path.exists(_) and is_corrupted(_):
+            i = 1
+            while True:
+                candidate = _.replace(".log.gz", ".log.%d.gz" % i)
+                if not os.path.exists(candidate):
+                    shutil.move(_, candidate)
+                    break
+                else:
+                    i += 1
+
+        if not os.path.exists(_):
+            open(_, "w+").close()
+            os.chmod(_, DEFAULT_LOG_PERMISSIONS)
+
+        _log_path = _
+        _log_handle = gzip.open(_log_path, "ab")
+
+    return _log_handle
+```
+* fungsi ini akan membuat penamaan file log dengan format `%d-%02d-%02d.log.gz" % (localtime.tm_year, localtime.tm_mon, localtime.tm_mday`, dimana waktu didapat dari penggunaan
+`time.localtime`
+* fungsi ini juga akan melakukan pengecekan jika sebelumnya sudah dibuat file yang sama, misalnya dilakukan lebih dari satu logging pada satu hari, maka penamaan akan dirubah 
+menggunakan `candidate = _.replace(".log.gz", ".log.%d.gz" % i`. Dengan menggunakan counter (i), maka penamaan file akan menyesuaikan i yang bertambah, seperti 
+```bash
+2021-01-12.log.gz
+2021-01-12.log.1.gz
+2021-01-12.log.2.gz
+```
+* fungsi ini juga akan me return `_log_handle` dimana berisi file log yang sudah dibuka dengan `gzip.open(_log_path, "ab")`
+
+##### Fungsi log_write
+```bash
+def log_write(sec, text):
+    global _counter
+    global _flush_last
+
+    _counter += 1
+
+    handle = get_log_handle(sec)
+
+    if CONSOLE_OUTPUT:
+        sys.stdout.write(text)
+        sys.stdout.flush()
+
+    elif SHOW_COUNTER:
+        sys.stdout.write("\r%d" % _counter)
+        sys.stdout.flush()
+
+    handle.write(text.encode("utf8") if hasattr(text, "encode") else text)
+
+    if _flush_last is None or (time.time() - _flush_last) >= FLUSH_LOG_TIMEOUT:
+        handle.flush()
+        _flush_last = time.time()
+```
+* Fungsi ini akan dipanggil untuk menulisakan kedalam file yang sudah dibuat dengan urutan tertentu dan melakukan flush
+
+##### fungsi safe_csv_value
+```bash
+def safe_csv_value(value):
+    retval = str(value or '-')
+    if any(_ in retval for _ in (' ', '"')):
+        retval = "\"%s\"" % retval.replace('"', '""')
+    return retval
+```
+
+##### fungsi
+```bash
+def packet_handler(header, packet):
+    try:
+        if _datalink == pcapy.DLT_LINUX_SLL:
+            packet = packet[2:]
+        eth = dpkt.ethernet.Ethernet(packet)
+        if eth.type == dpkt.ethernet.ETH_TYPE_IP:
+            ip = eth.data
+            ip_data = ip.data
+
+            src_ip = socket.inet_ntoa(ip.src)   
+            dst_ip = socket.inet_ntoa(ip.dst)
+
+            if isinstance(ip_data, dpkt.udp.UDP):
+                udp = ip_data
+                msg = dpkt.dns.DNS(udp.data)
+                sec, usec = header.getts()
+                if msg.qd[0].name:
+                    query = msg.qd[0].name.lower()
+                    parts = query.split('.')
+                    answers = []
+
+                    if len(parts) < 2 or parts[-1].isdigit() or ".intranet." in query or any(query.endswith(_) for _ in (".guest", ".in-addr.arpa", ".local")) or re.search(r"\A\d+\.\d+\.\d+\.\d+\.", query) or re.search(r"\d+-\d+-\d+-\d+", parts[0]):  # (e.g. labos, labos.8.8.4.4, 57.8.68.217.checkpoint.com, 2-229-52-28.ip195.fastwebnet.it, dynamic-pppoe-178-141-14-141.kirov.pv.mts.ru)
+                        return
+
+                    if udp.sport == 53:
+                        for an in msg.an:
+                            if hasattr(an, "ip"):
+                                answers.append(socket.inet_ntoa(an.ip))
+
+                    if udp.dport == 53:
+                        log_write(sec, "%s.%06d Q %s %s %s %s %s\n" % (time.strftime("%H:%M:%S", time.localtime(sec)), usec, DNS_QUERY_LUT[msg.qd[0].type], src_ip, dst_ip, safe_csv_value(query), "?"))
+                    if udp.sport == 53:  # and msg.qr == dpkt.dns.DNS_A:
+                        log_write(sec, "%s.%06d R %s %s %s %s %s\n" % (time.strftime("%H:%M:%S", time.localtime(sec)), usec, DNS_QUERY_LUT[msg.qd[0].type], src_ip, dst_ip, safe_csv_value(query), safe_csv_value(','.join(answers))))
+
+    except KeyboardInterrupt:
+        raise
+
+    except:
+        if SHOW_TRACE:
+            traceback.print_exc()
+```
+* Fungsi ini berguna untuk melakukan segala keperluan capture packet yang diawali dengan pendefinisian paket menggunakan `pcapy` dan `dpkt`
+* kemudian juga di definisikan `scr ip` dan `dst ip` menggunakan socket
+* Kemudian untuk penulisan kedalam file log, digunakan `log_write()` dengan urutan jam/menit/detik, waktu local, usec, DSN record, source ip, destination ip dengan menggunakan
+`log_write(sec, "%s.%06d Q %s %s %s %s %s\n" % (time.strftime("%H:%M:%S", time.localtime(sec)), usec, DNS_QUERY_LUT[msg.qd[0].type], src_ip, dst_ip, safe_csv_value(query), "?"))`
 
   ![topologi_1](https://github.com/.png)
  
