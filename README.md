@@ -14,13 +14,13 @@ apt-get install git python python-pcapy python-dpkt
 ```bash
 */1 * * * * if [ -n "$(ps -ef | grep -v grep | grep 'dnslog.py')" ]; then : ; else python /opt/dnslog/dnslog.py &> /var/log/dnslog.log; fi
 ```
-* Karena adanya penggunaan sandbox dari twilio, Selanjutnya adalah melakukan instalasi virtual environment dengan cara `python3 -m venv pywhatsapp`    
-* Kemudian mengaktifkannya `source ./pywhatsapp/bin/activate`
-* selanjutnya melakukan export untuk id dan token pengguna dari twilio dengan menjalankan
+* Karena adanya penggunaan sandbox dari twilio, maka diperlukan melakukan export untuk id dan token pengguna dari twilio dengan menjalankan
 ```bash
 export TWILIO_ACCOUNT_SID='ACxxxxxxxx'
 export TWILIO_AUTH_TOKEN='secret auth tokenxxxx'
 ```
+* Selanjutnya adalah melakukan instalasi virtual environment dengan cara `python3 -m venv pywhatsapp`    
+* Kemudian mengaktifkannya `source ./pywhatsapp/bin/activate`
 
 ## Penjelasan
 Ide Project yang saya buat memiliki 3 bagian program, yaitu `dnslog.py`, `startdns.py` dan `whatsapp.py`
