@@ -4,7 +4,8 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   * Muhammad Irsyad Ali (05311840000041)  
   
 [Tahap persiapan](##Tahap-Persiapan)
-[Tahap kedua](##Penjelasan)
+[Penjelasan](##Penjelasan)
+
 ---
 ## DNS Logging
 ---
