@@ -5,9 +5,9 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   
 [1. Tahap persiapan](#Tahap-Persiapan)  
 [2. Penjelasan](#Penjelasan)  
-[a. dnslog.py](#1)
-[b. startdns.py](#2)
-[c. whatsapp.py](#3)  
+[a. dnslog.py](#1)  
+[b. startdns.py](#2)  
+[c. whatsapp.py](#3)    
 [3. Dokumentasi](#Dokumentasi)
 
 
