@@ -4,8 +4,8 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
   * Muhammad Irsyad Ali (05311840000041)  
   
 [1. Tahap persiapan](#Tahap-Persiapan)  
-[2. Penjelasan](#Penjelasan)  
- [A: dnslog.py](#A: dnslog.py)
+[2. Penjelasan](#Penjelasan)    
+[A: dnslog.py](#A: dnslog.py)
 [3. Dokumentasi](#Dokumentasi)
 
 ---
