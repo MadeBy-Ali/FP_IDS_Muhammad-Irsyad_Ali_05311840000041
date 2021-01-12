@@ -1,14 +1,15 @@
 # FP_SDI_05311840000041
 
 Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020  
-  * Muhammad Irsyad Ali (05311840000041)
+  * Muhammad Irsyad Ali (05311840000041)  
+  
 [Tahap persiapan](##Tahap-Persiapan)
-
+[Tahap kedua](##Penjelasan)
 ---
 ## DNS Logging
 ---
 
-## Tahap-Persiapan
+## tahap-persiapan
 * Program ini membUtuhkan adanya `pcapy` dan `dpkt` sehingga instalasi dapat dilakukan dengan cara  
 ```bash
 apt-get install git python python-pcapy python-dpkt
