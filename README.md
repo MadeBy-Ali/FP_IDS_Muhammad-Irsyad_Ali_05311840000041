@@ -380,5 +380,16 @@ client.messages.create(body='logging telah dilakukan, terdadpat satu Query/Reque
 ```
 
 ## Dokumentasi
-  ![topologi_1](https://github.com/.png)
-  ![topologi_1](https://github.com/.png)
+
+#### Tampilan logging sedang berjalan
+![dokum_1](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/tampilan%20logging%20berjalan.png)
+#### Contoh tampilan quick capture
+![dokum_2](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/contoh%20quick%20capture.png)
+#### Contoh filter response dengan ip atau domain tertentu
+![dokum_3](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/contoh%20filter%20response%20dengan%20ip%20atau%20domain%20tertentu.png)
+#### Contoh query response dengan ip atau domain tertentu
+![dokum_4](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/contoh%20filter%20query%20dengan%20ip%20atau%20domain%20tertentu.png)
+#### Contoh notifikasi whatsapp
+![dokum_5](https://github.com/irsyadali1/FP_SDI_05311840000041/blob/main/dokum%20fp%20sdi/contoh%20notifikasi%20whatsapp.png)
+
+
