@@ -25,18 +25,9 @@ export TWILIO_AUTH_TOKEN='secret auth tokenxxxx'
 ## Penjelasan
 Ide Project yang saya buat memiliki 3 bagian program, yaitu `dnslog.py`, `startdns.py` dan `whatsapp.py`
 
-### A: Menginstall 
+#### A: dnslog.py
   ![topologi_1](https://github.com/krisnanda59/Jarkom_Modul5__Lapres_T19/blob/main/dokum%20shift%205/topologi_persiapan.png)
  
-### B: Subnetting(CIDR)
+#### B: startdns.py
 
-### C: Routing
-
-### D: DHCP Relay dan DHCP Server
-
-## Soal
-### Nomor 1
-
-### Nomor 2
-
-### Nomor 3
+#### C: whatsapp.py
