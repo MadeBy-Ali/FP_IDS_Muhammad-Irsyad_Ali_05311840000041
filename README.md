@@ -77,7 +77,7 @@ _flush_last = None
 * Pada bagian ini didefinisikan nama, tempat lokasi dimana log akan berada, permission dan lain lain. Juga didefinisikan `snap_len` dan `promiscuous_mode` untuk keperluan pcapy
 * Kemudian didefinisikan juga `dns_query_lut` yang merupakan jenis jenis DNS record yang akan di capture
 
-##### fungsi is_corrupted
+##### Fungsi is_corrupted
 ```bash
 def is_corrupted(path):
     retval = True
@@ -101,7 +101,7 @@ def is_corrupted(path):
 ```
 * Fungsi untuk pengecekan file log
 
-##### fungsi get_log_handle
+##### Fungsi get_log_handle
 ```bash
 def get_log_handle(sec):
     global _log_path
@@ -167,7 +167,7 @@ def log_write(sec, text):
 ```
 * Fungsi ini akan dipanggil untuk menulisakan kedalam file yang sudah dibuat dengan urutan tertentu dan melakukan flush
 
-##### fungsi safe_csv_value
+##### Fungsi safe_csv_value
 ```bash
 def safe_csv_value(value):
     retval = str(value or '-')
@@ -176,7 +176,7 @@ def safe_csv_value(value):
     return retval
 ```
 
-##### fungsi packet_handler
+##### Fungsi packet_handler
 ```bash
 def packet_handler(header, packet):
     try:
@@ -224,7 +224,7 @@ def packet_handler(header, packet):
 * Kemudian untuk penulisan kedalam file log, digunakan `log_write()` dengan urutan jam/menit/detik, waktu local, usec, DSN record, source ip, destination ip dengan menggunakan
 `log_write(sec, "%s.%06d Q %s %s %s %s %s\n" % (time.strftime("%H:%M:%S", time.localtime(sec)), usec, DNS_QUERY_LUT[msg.qd[0].type], src_ip, dst_ip, safe_csv_value(query), "?"))`
 
-##### fungsi main
+##### Fungsi main
 ```bash
 def main():
     global _cap
@@ -258,7 +258,7 @@ def main():
 * kemudian akan dijalankan `pcapy.open_live()` untuk keperluan capture packet dengan waktu dan mode yang sudah ditentukan
 * lalu fungsi `packet_handler` dipanggil dan di loop menggunakan `_cap.loop(-1, packet_handler)` yang akan terus berjalan kecuali dilakukan keyboard interupt
 
-##### main
+##### Main
 ```bash
 if __name__ == "__main__":
     try:
@@ -277,5 +277,24 @@ if __name__ == "__main__":
   ![topologi_1](https://github.com/.png)
  
 #### B: startdns.py
+* startdns.py berfungsi sebagai interface yang digunakan oleh user, disini user bisa menjalankan loggingnya dan menentukan filter apa yang mau digunakan
+```bash
+
+```
 
 #### C: whatsapp.py
+* whatsapp.py berfungsi untuk mengirimkan notifikasi ke pengguna jika ada filter yang terpenuhi dengan mengirimpan pesan via Whatsapp
+```bash
+from twilio.rest import Client
+
+client = Client()
+
+
+from_whatsapp_number='whatsapp:+14155238886'
+
+to_whatsapp_number='whatsapp:+6281808762209'
+
+client.messages.create(body='logging telah dilakukan, terdadpat satu Query/Request yang tidak diinginkan!',
+                       from_=from_whatsapp_number,
+                       to=to_whatsapp_number)
+```
