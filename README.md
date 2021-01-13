@@ -16,6 +16,7 @@ Penjelasan Ide Project dan program, Sistem Deteksi & Intrusi, 2020
 ---
 
 ## tahap-persiapan
+* Program ini membutuhkan python 3
 * Program ini membUtuhkan adanya `pcapy` dan `dpkt` sehingga instalasi dapat dilakukan dengan cara  
 ```bash
 apt-get install git python python-pcapy python-dpkt
